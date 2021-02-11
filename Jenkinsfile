@@ -1,32 +1,21 @@
+DOCKER_MAVEN_IMAGE = 'maven:3.5.2-jdk-8-alpine'
+DOCKER_MAVEN_ARGS = '-v $HOME/.m2/builds/$BRANCH_NAME:/root/.m2 -u 0:0'
 pipeline {
-     agent any
-
-    stages {
-
-         stage('build Dockerfile') {
-
-            steps {
-                sh '''echo "FROM maven:3-alpine
-                          RUN apk add --update docker openrc
-                          RUN rc-update add docker boot" >/var/lib/jenkins_home/workspace/Dockerfile'''
-
-            }
-         }
-
-         stage('run Dockerfile') {
-             agent{
-                 dockerfile {
-                            filename '/var/lib/jenkins_home/workspace/Dockerfile'
-                            args '--user root -v $HOME/.m2:/root/.m2  -v /var/run/docker.sock:/var/run/docker.sock'
-                        }
-             }
-
-             steps {
-                 sh 'docker version'
-                 sh 'mvn -version'
-             }
-
-         }
-
+  stages{
+    stage('load') {
+      agent {
+        docker {
+          image DOCKER_MAVEN_IMAGE
+          args DOCKER_MAVEN_ARGS
+        }
+      }
+      stage('Test') {
+        steps {
+            
+            // cleanup generate artifacts to ensure build can be cleaned up
+            sh 'mvn -version'
+        }
+      }
     }
+  }
 }
