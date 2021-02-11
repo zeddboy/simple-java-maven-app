@@ -1,23 +1,27 @@
-pipeline {
-  envinorment{
-    DOCKER_MAVEN_IMAGE = 'maven:3.5.2-jdk-8-alpine'
-    DOCKER_MAVEN_ARGS = '-v $HOME/.m2/builds/$BRANCH_NAME:/root/.m2 -u 0:0'
-  }
-  stages{
-    stage('load') {
-      agent {
-        docker {
-          image DOCKER_MAVEN_IMAGE
-          args DOCKER_MAVEN_ARGS
-        }
-      }
+peline {
+    environment {
+        JAVA_TOOL_OPTIONS = "-Duser.home=/var/maven"
     }
-      stage('Test') {
-        steps {
-            
-            // cleanup generate artifacts to ensure build can be cleaned up
-            sh 'mvn -version'
+    agent {
+        docker {
+            image "maven:3.6.0-jdk-13"
+            label "docker"
+            args "-v /tmp/maven:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2"
         }
-      }
-  }
+    }
+
+    stages {
+        stage("Build") {
+            steps {
+                sh "mvn -version"
+                sh "mvn clean install"
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
 }
