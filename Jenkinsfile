@@ -1,4 +1,4 @@
-peline {
+pipeline {
     environment {
         JAVA_TOOL_OPTIONS = "-Duser.home=/var/maven"
     }
