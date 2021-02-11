@@ -9,6 +9,7 @@ pipeline {
           args DOCKER_MAVEN_ARGS
         }
       }
+    }
       stage('Test') {
         steps {
             
@@ -16,6 +17,5 @@ pipeline {
             sh 'mvn -version'
         }
       }
-    }
   }
 }
