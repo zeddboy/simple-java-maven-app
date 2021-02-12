@@ -14,7 +14,8 @@ you'll be creating yourself during the tutorial and the `scripts` subdirectory
 contains a shell script with commands that are executed when Jenkins processes
 the "Deliver" stage of your Pipeline.
 # Docker in Docker
-stop all docker image running on port 8080 or chanege the port number \n
+stop all docker image running on port 8080 or chanege the port number
+
 1.Go to your cmd run this command
 ```
 
@@ -58,7 +59,7 @@ root@cf1fd5908a1c:/#
 ```
 this means you have succesfully created the image 
 
-Now i will give jenkins actions access to all users for that run this command
+Now to give jenkins actions access to all users for that run this command
 ```
 chmod 777 /var/run/docker.sock
 ```
