@@ -15,11 +15,13 @@ pipeline{
       steps{
         sh 'mvn test'
       }
-     stage('collect artifact')
+      }
+     stage('collect artifact'){
      steps{
      archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+     }
      }
       
   }
   }
-}
+
