@@ -14,7 +14,7 @@ you'll be creating yourself during the tutorial and the `scripts` subdirectory
 contains a shell script with commands that are executed when Jenkins processes
 the "Deliver" stage of your Pipeline.
 # Docker in Docker
-stop all docker image running on port 8080 or chanege the port number
+stop all docker images running on port 8080 or change the port number
 
 1.Go to your cmd run this command
 ```
